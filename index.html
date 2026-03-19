@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Folio — Read more. One moment at a time.</title>
+  <meta name="description" content="A floating ebook reader that lives in the corner of your browser. Read your book between meetings, during builds, over lunch." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg:        #0f0f1a;
+      --bg2:       #14142a;
+      --bg3:       #1a1a38;
+      --border:    #252545;
+      --text:      #d0d4e8;
+      --muted:     #7880a4;
+      --white:     #ffffff;
+      --accent:    #4ecdc4;
+      --accent2:   #38b2aa;
+      --pro-glow:  rgba(78, 205, 196, 0.15);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Nav ─────────────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 40px;
+      background: rgba(15, 15, 26, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(37, 37, 69, 0.6);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--white);
+      letter-spacing: -0.3px;
+    }
+
+    .nav-logo .book-icon {
+      width: 30px;
+      height: 30px;
+      background: var(--bg3);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+    }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #0a1a1a;
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 8px 18px;
+      border-radius: 8px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .nav-cta:hover {
+      background: var(--accent2);
+      transform: translateY(-1px);
+    }
+
+    /* ── Sections ─────────────────────────────────────────────────────────── */
+    section {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Hero ─────────────────────────────────────────────────────────────── */
+    .hero-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 30%, rgba(78, 205, 196, 0.07) 0%, transparent 70%),
+        var(--bg);
+      padding-top: 80px;
+    }
+
+    .hero {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(78, 205, 196, 0.1);
+      border: 1px solid rgba(78, 205, 196, 0.25);
+      border-radius: 100px;
+      padding: 5px 14px 5px 10px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 32px;
+      letter-spacing: 0.2px;
+    }
+
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.15;
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 540px;
+      margin: 0 auto 40px;
+      line-height: 1.65;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #071818;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 10px;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(78, 205, 196, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent2);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(78, 205, 196, 0.35);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* ── Mock widget ──────────────────────────────────────────────────────── */
+    .mock-wrap {
+      margin-top: 72px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .mock-panel {
+      width: 260px;
+      background: #13132a;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow:
+        0 0 0 1px rgba(78, 205, 196, 0.06),
+        0 24px 80px rgba(0,0,0,0.55),
+        0 4px 16px rgba(0,0,0,0.4);
+      overflow: hidden;
+      font-size: 0.72rem;
+    }
+
+    .mock-header {
+      background: #0d0d22;
+      padding: 9px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mock-title { color: var(--white); font-weight: 600; font-size: 0.75rem; }
+    .mock-sub   { color: var(--muted); font-size: 0.65rem; margin-top: 1px; }
+
+    .mock-controls {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .mock-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 5px;
+      background: #1e1e40;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+    }
+
+    .mock-body {
+      padding: 14px 12px;
+    }
+
+    .mock-line {
+      height: 7px;
+      border-radius: 4px;
+      background: #242448;
+      margin-bottom: 7px;
+    }
+
+    .mock-line.w-full { width: 100%; }
+    .mock-line.w-90   { width: 90%; }
+    .mock-line.w-75   { width: 75%; }
+    .mock-line.w-60   { width: 60%; }
+    .mock-line.w-50   { width: 50%; }
+    .mock-line.accent { background: rgba(78, 205, 196, 0.25); }
+
+    .mock-footer {
+      background: #0d0d22;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+    }
+
+    .mock-progress-bar {
+      flex: 1;
+      height: 3px;
+      background: #242448;
+      border-radius: 2px;
+      margin: 0 10px;
+      overflow: hidden;
+    }
+
+    .mock-progress-fill {
+      width: 38%;
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .mock-pg { color: var(--muted); font-size: 0.62rem; }
+
+    /* ── Problem / Solution ───────────────────────────────────────────────── */
+    .problem-wrap {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 72px 24px;
+    }
+
+    .problem-inner {
+      max-width: 660px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .problem-inner p {
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      color: var(--text);
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    .problem-inner strong {
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    /* ── Features ─────────────────────────────────────────────────────────── */
+    .features-wrap {
+      padding: 96px 24px;
+    }
+
+    .section-label {
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.8px;
+      margin-bottom: 56px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 32px 28px;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(78, 205, 196, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .feature-icon {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── Pricing ──────────────────────────────────────────────────────────── */
+    .pricing-wrap {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 96px 24px;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 740px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pricing-card.pro {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(78, 205, 196, 0.1), 0 8px 40px var(--pro-glow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-card.pro::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .pricing-badge {
+      display: inline-block;
+      background: rgba(78, 205, 196, 0.15);
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(78, 205, 196, 0.25);
+    }
+
+    .pricing-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .pricing-price {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -1px;
+      margin-bottom: 4px;
+    }
+
+    .pricing-price span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0;
+    }
+
+    .pricing-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .pricing-features {
+      list-style: none;
+      flex: 1;
+      margin-bottom: 32px;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.875rem;
+      color: var(--text);
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(37, 37, 69, 0.5);
+    }
+
+    .pricing-features li:last-child { border-bottom: none; }
+
+    .pricing-features li::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .pricing-card .btn-primary,
+    .pricing-card .btn-secondary {
+      width: 100%;
+      justify-content: center;
+      font-size: 0.9rem;
+      padding: 12px 20px;
+    }
+
+    /* ── Footer ───────────────────────────────────────────────────────────── */
+    footer {
+      padding: 48px 24px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+    }
+
+    .footer-links a {
+      font-size: 0.82rem;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--accent); }
+
+    .footer-made {
+      font-size: 0.78rem;
+      color: #3e4460;
+    }
+
+    /* ── Responsive ───────────────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      nav { padding: 14px 20px; }
+
+      .features-grid,
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-btns { flex-direction: column; align-items: center; }
+
+      .mock-wrap { display: none; }
+
+      .feature-card { padding: 24px 20px; }
+
+      .pricing-card { padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ──────────────────────────────────────────────────────────────── -->
+  <nav>
+    <div class="nav-logo">
+      <div class="book-icon">📖</div>
+      Folio
+    </div>
+    <a class="nav-cta" href="CHROME_STORE_URL_HERE" target="_blank" rel="noopener">
+      Add to Chrome — free
+    </a>
+  </nav>
+
+  <!-- ── Hero ─────────────────────────────────────────────────────────────── -->
+  <div class="hero-wrap">
+    <div style="width:100%; max-width:1000px; padding: 0 24px; margin: 0 auto;">
+      <div class="hero">
+        <div class="hero-badge">
+          <div class="dot"></div>
+          Now available for Chrome &amp; Edge
+        </div>
+
+        <h1>Read more.<br /><em>One moment at a time.</em></h1>
+
+        <p>
+          Folio is a floating ebook reader that lives in the corner of your browser.
+          Read your book between meetings, during builds, over lunch.
+        </p>
+
+        <div class="hero-btns">
+          <a class="btn-primary" href="CHROME_STORE_URL_HERE" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Add to Chrome — it's free
+          </a>
+          <a class="btn-secondary" href="#features">
+            See how it works
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Mock widget -->
+      <div class="mock-wrap">
+        <div class="mock-panel">
+          <div class="mock-header">
+            <div>
+              <div class="mock-title">Folio</div>
+              <div class="mock-sub">Chapter 12 · Crime &amp; Punishment</div>
+            </div>
+            <div class="mock-controls">
+              <div class="mock-btn">🤖</div>
+              <div class="mock-btn">🔊</div>
+              <div class="mock-btn">⚙</div>
+            </div>
+          </div>
+          <div class="mock-body">
+            <div class="mock-line w-full accent"></div>
+            <div class="mock-line w-full"></div>
+            <div class="mock-line w-90"></div>
+            <div class="mock-line w-full"></div>
+            <div class="mock-line w-75"></div>
+            <div style="height:10px"></div>
+            <div class="mock-line w-full"></div>
+            <div class="mock-line w-90"></div>
+            <div class="mock-line w-full"></div>
+            <div class="mock-line w-60"></div>
+          </div>
+          <div class="mock-footer">
+            <div class="mock-pg">38%</div>
+            <div class="mock-progress-bar">
+              <div class="mock-progress-fill"></div>
+            </div>
+            <div class="mock-pg">ch 12/31</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Problem / Solution ────────────────────────────────────────────────── -->
+  <div class="problem-wrap">
+    <div class="problem-inner">
+      <p>
+        <strong>Most people want to read more.</strong> The problem isn't motivation —
+        it's that reading requires a block of uninterrupted time that never seems to
+        appear. Folio fixes this by bringing your book to you, not the other way around.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Features ─────────────────────────────────────────────────────────── -->
+  <div class="features-wrap" id="features">
+    <section>
+      <div class="section-label">Features</div>
+      <div class="section-title">Everything a reader needs</div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <span class="feature-icon">📖</span>
+          <h3>Always there</h3>
+          <p>A resizable panel that floats over any webpage. Make it as small as a widget or as large as you like. It stays out of your way until you need it.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">🤖</span>
+          <h3>AI catch-up</h3>
+          <p>Been away for a while? Hit one button and get a 2-sentence briefing on where you are in the story. Back in context instantly.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">🔊</span>
+          <h3>Listen while you work</h3>
+          <p>Text-to-speech reads your book aloud so you can keep your eyes on your work. Multiple voices, sentence-level highlighting.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">🔄</span>
+          <h3>Picks up where you left off</h3>
+          <p>Your position syncs across every tab and every device automatically. Switch from your laptop to your desktop — Folio remembers.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── Pricing ───────────────────────────────────────────────────────────── -->
+  <div class="pricing-wrap" id="pricing">
+    <section>
+      <div class="section-label">Pricing</div>
+      <div class="section-title">Simple, honest pricing</div>
+
+      <div class="pricing-grid">
+
+        <!-- Free -->
+        <div class="pricing-card">
+          <h3>Free</h3>
+          <div class="pricing-price">$0</div>
+          <div class="pricing-desc">Everything you need to get started.</div>
+
+          <ul class="pricing-features">
+            <li>Unlimited reading</li>
+            <li>30 mins TTS per month</li>
+            <li>5 AI summaries per month</li>
+            <li>Cross-device sync</li>
+          </ul>
+
+          <a class="btn-secondary" href="CHROME_STORE_URL_HERE" target="_blank" rel="noopener">
+            Add to Chrome
+          </a>
+        </div>
+
+        <!-- Pro -->
+        <div class="pricing-card pro">
+          <div class="pricing-badge">Most popular</div>
+          <h3>Folio Pro</h3>
+          <div class="pricing-price">$7 <span>/ month</span></div>
+          <div class="pricing-desc">For readers who want the full experience.</div>
+
+          <ul class="pricing-features">
+            <li>Everything in Free</li>
+            <li>Unlimited TTS</li>
+            <li>Unlimited AI summaries</li>
+            <li>Priority support</li>
+          </ul>
+
+          <a class="btn-primary" href="STRIPE_PAYMENT_LINK_HERE" target="_blank" rel="noopener">
+            Upgrade to Pro
+          </a>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- ── Footer ────────────────────────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-logo">Folio</div>
+    <div class="footer-links">
+      <a href="https://roryreade10-wq.github.io/roryreade10-wq/privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>
+      <a href="CHROME_STORE_URL_HERE" target="_blank" rel="noopener">Chrome Web Store</a>
+    </div>
+    <div class="footer-made">
+      Read more. One moment at a time. &nbsp;·&nbsp; Made in New Zealand 🇳🇿
+    </div>
+  </footer>
+
+</body>
+</html>
