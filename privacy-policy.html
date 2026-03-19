@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Folio</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f1a;
+      color: #d0d4e8;
+      line-height: 1.7;
+      padding: 48px 24px 80px;
+    }
+
+    .wrap {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .logo {
+      width: 44px;
+      height: 44px;
+      background: #1a1a2e;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.3px;
+    }
+
+    header p {
+      font-size: 0.82rem;
+      color: #7880a0;
+      margin-top: 2px;
+    }
+
+    h2 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 36px 0 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #2a2a42;
+    }
+
+    p { margin-bottom: 12px; }
+
+    ul {
+      margin: 8px 0 12px 20px;
+    }
+
+    ul li { margin-bottom: 6px; }
+
+    a {
+      color: #7b8cde;
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    .pill {
+      display: inline-block;
+      background: #1e1e38;
+      border: 1px solid #2e2e50;
+      border-radius: 6px;
+      padding: 2px 10px;
+      font-size: 0.78rem;
+      color: #9098c0;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    .highlight {
+      background: #1a1a2e;
+      border-left: 3px solid #4a56a6;
+      border-radius: 0 6px 6px 0;
+      padding: 12px 16px;
+      margin: 16px 0;
+      font-size: 0.92rem;
+      color: #b0b8d8;
+    }
+
+    footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid #2a2a42;
+      font-size: 0.82rem;
+      color: #586080;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <div class="logo">📖</div>
+      <div>
+        <h1>Folio — Privacy Policy</h1>
+        <p>Last updated: March 2025</p>
+      </div>
+    </header>
+
+    <p>
+      Folio is a browser extension that lets you read EPUB books in a floating panel
+      while you browse. This policy explains what information is collected, how it is
+      used, and what stays on your device.
+    </p>
+
+    <div class="highlight">
+      <strong>Short version:</strong> Your books stay on your device. Your reading
+      progress is saved to your Firebase account. Passages of text are sent to OpenAI
+      for narration and AI summaries. Payments are handled by Stripe. We do not sell
+      your data.
+    </div>
+
+    <!-- ── 1 ── -->
+    <h2>1. Information we collect</h2>
+
+    <p><strong>Google account details</strong> <span class="pill">via Google Sign-In</span></p>
+    <p>
+      When you sign in with Google, we receive your display name and email address.
+      This is used to create your Folio account and identify you across devices.
+    </p>
+
+    <p><strong>Authentication tokens</strong></p>
+    <p>
+      Firebase authentication tokens are stored locally in your browser's extension
+      storage. They are used to authenticate requests to Folio's backend and are never
+      transmitted to any party other than Google and Firebase.
+    </p>
+
+    <p><strong>EPUB files and reading progress</strong></p>
+    <p>
+      Book files you upload are stored locally on your device using the browser's
+      extension storage. Your reading progress (chapter position, paragraph index,
+      and settings) is synced to Firebase Firestore under your user account so it
+      is available across sessions.
+    </p>
+
+    <p><strong>Usage counters</strong></p>
+    <p>
+      We store how many TTS minutes and AI summaries you have used in the current
+      billing period. This is used to enforce free-tier limits and is stored in
+      Firestore under your account.
+    </p>
+
+    <!-- ── 2 ── -->
+    <h2>2. Third-party services</h2>
+
+    <p><strong>Google Firebase</strong> <span class="pill">Authentication &amp; Database</span></p>
+    <p>
+      Folio uses Firebase for user authentication and to sync reading state across
+      sessions. Firebase is operated by Google. Data stored in Firestore is governed
+      by Google's Privacy Policy:
+      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">
+        policies.google.com/privacy
+      </a>.
+    </p>
+
+    <p><strong>OpenAI</strong> <span class="pill">Text-to-Speech &amp; AI Summaries</span></p>
+    <p>
+      When you use the narration or "catch me up" summary feature, the relevant passage
+      of text from your book is sent to OpenAI's API. OpenAI processes this text to
+      generate audio or a written summary and returns the result to your browser.
+      OpenAI does not receive your name, email, or account information — only the
+      text content needed to fulfil the request.
+    </p>
+    <p>
+      OpenAI's data use policy applies to this content:
+      <a href="https://openai.com/policies/api-data-usage-policies" target="_blank" rel="noopener">
+        openai.com/policies/api-data-usage-policies
+      </a>.
+    </p>
+
+    <p><strong>Stripe</strong> <span class="pill">Payment Processing</span></p>
+    <p>
+      Folio Pro subscriptions are processed through Stripe. When you subscribe, you
+      are redirected to a Stripe-hosted checkout page. Folio does not see or store
+      your payment card details. Stripe's Privacy Policy applies to all payment
+      interactions:
+      <a href="https://stripe.com/privacy" target="_blank" rel="noopener">
+        stripe.com/privacy
+      </a>.
+    </p>
+
+    <!-- ── 3 ── -->
+    <h2>3. What we do not do</h2>
+    <ul>
+      <li>We do not sell your data to any third party.</li>
+      <li>We do not use your book content for advertising or profiling.</li>
+      <li>We do not share your email address with any party other than Firebase
+          for authentication purposes.</li>
+      <li>We do not track your browsing activity on pages where the extension
+          is loaded.</li>
+    </ul>
+
+    <!-- ── 4 ── -->
+    <h2>4. Data retention</h2>
+    <p>
+      Your account data (email, usage counters, reading progress) is retained in
+      Firestore for as long as your account is active. You may request deletion of
+      your account and all associated data by contacting us at the email below.
+    </p>
+    <p>
+      Book files and local reading state are stored on your device only and can be
+      removed at any time by uninstalling the extension or clearing the extension's
+      storage in your browser settings.
+    </p>
+
+    <!-- ── 5 ── -->
+    <h2>5. Children's privacy</h2>
+    <p>
+      Folio is not directed at children under the age of 13. We do not knowingly
+      collect personal information from children. If you believe a child has provided
+      us with personal information, please contact us and we will delete it.
+    </p>
+
+    <!-- ── 6 ── -->
+    <h2>6. Changes to this policy</h2>
+    <p>
+      We may update this policy from time to time. The date at the top of this page
+      reflects when it was last revised. Continued use of Folio after changes
+      constitutes acceptance of the updated policy.
+    </p>
+
+    <!-- ── 7 ── -->
+    <h2>7. Contact</h2>
+    <p>
+      Questions or requests regarding your data can be sent to:<br />
+      <a href="mailto:roryreade10@gmail.com">roryreade10@gmail.com</a>
+    </p>
+
+    <footer>
+      &copy; 2025 Folio. All rights reserved.
+    </footer>
+
+  </div>
+</body>
+</html>
